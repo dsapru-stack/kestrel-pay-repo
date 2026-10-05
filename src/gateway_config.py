@@ -6,7 +6,7 @@ This module defines timeout, retry, and idempotency settings for payment process
 
 # Gateway timeout configuration
 # Configure via Jira issue key tracking
-GATEWAY_TIMEOUT_SECONDS = 10  # Timeout setting (demo value)
+GATEWAY_TIMEOUT_SECONDS = 5  # Timeout setting (demo value)
 RETRY_ATTEMPTS = 3
 RETRY_BACKOFF_MS = 500
 
