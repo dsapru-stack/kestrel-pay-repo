@@ -1,0 +1,3 @@
+# Kestrel Pay demo scaffold uses the Python standard library only.
+# No packages to install; no server, payment gateway or network calls.
+
