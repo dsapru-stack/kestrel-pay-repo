@@ -1,0 +1,45 @@
+# Fictional Kestrel Commerce demo. The workflow creates a GitHub deployment
+# record for a DEMO environment; it does not ship software or contact a gateway.
+# Whether Jira displays this event depends on the connected GitHub for Jira app.
+name: Kestrel Pay demo deployment
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+
+jobs:
+  validate:
+    name: Validate mock service
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run offline unit tests
+        run: python -m unittest discover -s tests -v
+
+  demo-deployment:
+    name: Record a demo deployment (no release)
+    needs: validate
+    runs-on: ubuntu-latest
+    # A GitHub Actions environment creates a GitHub deployment record. This is
+    # intentionally NOT production: the job only prints a demo receipt.
+    environment: demo-production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show evidence identifiers without publishing software
+        shell: bash
+        run: |
+          echo 'Fictional Kestrel Pay demo deployment; no payment processing or production release.'
+          echo "Commit: ${GITHUB_SHA}"
+          echo "Environment: demo-production"
+          echo 'Use a real KCPAY key in a branch, PR and commit to associate evidence in Jira.'
+          echo 'Check GitHub for Jira permissions and verify whether Jira ingested this deployment.'
